@@ -3,35 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Gallery</title>
+    <title>Image Hosting</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
             margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 1em;
+            text-align: center;
+            color: white;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .container {
             padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .image-box {
+            background-color: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         img {
-            margin: 20px;
             max-width: 100%;
+            border-radius: 10px;
             height: auto;
+        }
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .search-box {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .search-box input {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
             border: 1px solid #ccc;
-            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 <body>
-    <h1>Image Gallery</h1>
-    
-    <img src="HeroCoin-s.png" alt="HeroCoin Small">
-    <img src="HeroCoin.png" alt="HeroCoin">
-    <img src="WUSD.png" alt="WUSD">
-    <img src="WUSD-s.png" alt="WUSD Small">
-    
+    <header>
+        <h1>Image Hosting</h1>
+    </header>
 
+    <div class="container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search for an image..." onkeyup="filterImages()">
+        </div>
+
+        <div class="image-grid" id="imageGrid">
+            <!-- Replace with your image URLs -->
+            <div class="image-box">
+                <img src="https://pica-lab.github.io/image/HeroCoin.png" alt="HeroCoin">
+                <button onclick="copyToClipboard('https://pica-lab.github.io/image/HeroCoin.png')">Copy URL</button>
+            </div>
+            <div class="image-box">
+                <img src="https://pica-lab.github.io/image/WUSD.png" alt="WUSD">
+                <button onclick="copyToClipboard('https://pica-lab.github.io/image/your-repo-name/WUSD.png')">Copy URL</button>
+            </div>
+            <div class="image-box">
+                <img src="https://pica-lab.github.io/image/logo.svg" alt="Logo">
+                <button onclick="copyToClipboard('https://pica-lab.github.io/image/logo.svg')">Copy URL</button>
+            </div>
+            <!-- Add more images as needed -->
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(url) {
+            navigator.clipboard.writeText(url).then(function() {
+                alert('URL copied to clipboard: ' + url);
+            }, function(err) {
+                alert('Failed to copy URL: ' + err);
+            });
+        }
+
+        function filterImages() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const images = document.querySelectorAll('.image-box');
+            
+            images.forEach(image => {
+                const altText = image.querySelector('img').alt.toLowerCase();
+                if (altText.includes(input)) {
+                    image.style.display = '';
+                } else {
+                    image.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
